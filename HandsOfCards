@@ -1,0 +1,56 @@
+package com.company;
+
+import java.util.*;
+
+public class HandsOfCards {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        Map<String, Set<String>> hands = new LinkedHashMap<>();
+
+        Map<String, Integer> power_multiplier = new HashMap<>();
+        power_multiplier.put("2", 2);
+        power_multiplier.put("3", 3);
+        power_multiplier.put("4", 4);
+        power_multiplier.put("5", 5);
+        power_multiplier.put("6", 6);
+        power_multiplier.put("7", 7);
+        power_multiplier.put("8", 8);
+        power_multiplier.put("9", 9);
+        power_multiplier.put("1", 10);
+        power_multiplier.put("J", 11);
+        power_multiplier.put("Q", 12);
+        power_multiplier.put("K", 13);
+        power_multiplier.put("A", 14);
+        power_multiplier.put("S", 4);
+        power_multiplier.put("H", 3);
+        power_multiplier.put("D", 2);
+        power_multiplier.put("C", 1);
+
+        String input = scan.nextLine();
+
+        while (!input.equals("JOKER")) {
+            String[] name_cards = input.split(": ");
+            String name = name_cards[0];
+            String[] cards = name_cards[1].split(", ");
+            hands.putIfAbsent(name, new HashSet<>());
+            hands.get(name).addAll(Arrays.asList(cards));
+            input = scan.nextLine();
+        }
+
+        for (Map.Entry<String, Set<String>> entry : hands.entrySet()) {
+            System.out.println(String.format("%s: %d", entry.getKey(), getValue(entry.getValue(), power_multiplier)));
+        }
+    }
+
+    private static int getValue(Set<String> cards, Map<String, Integer> power_multiplier) {
+        int value = 0;
+        for (String card : cards) {
+            char one = card.charAt(0);
+            char two = card.charAt(card.length() - 1);
+            value += power_multiplier.get(String.valueOf(one)) * power_multiplier.get(String.valueOf(two)); //!!!!!!!
+        }
+
+        return value;
+    }
+}
