@@ -1,0 +1,43 @@
+package com.company;
+
+import java.util.LinkedHashSet;
+import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+public class SoftUniParty {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        String input = scan.nextLine();
+        Set<String> vip = new TreeSet<>();
+        Set<String> normal = new TreeSet<>();
+
+        while(!input.equals("PARTY")) {
+            char check = input.charAt(0);
+            if (Character.isDigit(check)) {
+                vip.add(input);
+            } else {
+                normal.add(input);
+            }
+
+            input = scan.nextLine();
+        }
+
+        input = scan.nextLine();
+
+        while (!input.equals("END")) {
+            vip.remove(input);
+            normal.remove(input);
+            input = scan.nextLine();
+        }
+
+        System.out.println(vip.size() + normal.size());
+        for (String s : vip) {
+            System.out.println(s);
+        }
+
+        for (String s : normal) {
+            System.out.println(s);
+        }
+    }
+}
