@@ -1,0 +1,47 @@
+package com.company;
+
+import java.util.*;
+
+public class AverageStudentsGrades {
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+
+        int n = Integer.parseInt(scan.nextLine());
+
+        Map<String, List<Double>> students = new TreeMap<>();
+        for (int i = 0; i < n; i++) {
+            String[] tokens = scan.nextLine().split("\\s+");
+            String name = tokens[0];
+            double grade = Double.parseDouble(tokens[1]);
+
+            students.putIfAbsent(name, new ArrayList<>());
+            students.get(name).add(grade);
+        }
+        
+        for (Map.Entry<String, List<Double>> stringListEntry : students.entrySet()) {
+            System.out.println(String.format("%s -> %s(avg: %.2f)", stringListEntry.getKey(),
+                    getGrades(stringListEntry.getValue()), getAvg(stringListEntry.getValue())));
+        }
+    }
+
+    private static Double getAvg(List<Double> value) {
+        double output = 0.0;
+        for (Double aDouble : value) {
+            output += aDouble;
+        }
+
+        output = output / value.size();
+
+
+        return output;
+    }
+
+    private static String getGrades(List<Double> value) {
+        StringBuilder output = new StringBuilder();
+        for (Double aDouble : value) {
+            String current = String.format("%.2f ", aDouble);
+            output.append(current);
+        }
+        return output.toString();
+    }
+}
